@@ -1,2 +1,6 @@
 import { combineReducers } from 'redux'
-export default combineReducers({})
+import fetchCategoriesReducer from './fetch-categories-reducer'
+
+export default combineReducers({
+  categories: fetchCategoriesReducer
+})
