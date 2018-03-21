@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCategories } from '../actions/categories-actions'
+import { fetchCategories } from '../actions/category-actions'
 import { Dropdown } from 'semantic-ui-react'
 
-class App extends Component {
+class Categories extends Component {
   state = { dropdownOptions: [] }
   componentDidMount = () => {
     this.props.dispatch(fetchCategories())
@@ -12,10 +12,10 @@ class App extends Component {
   componentWillReceiveProps = nextProps => {
     if (nextProps.categories.fetched)
       this.setState({
-        dropdownOptions: nextProps.categories.list.map(categorie => ({
-          key: categorie.path,
-          value: categorie.path,
-          text: categorie.name
+        dropdownOptions: nextProps.categories.list.map(category => ({
+          key: category.path,
+          value: category.path,
+          text: category.name
         }))
       })
   }
@@ -30,4 +30,4 @@ class App extends Component {
   )
 }
 
-export default connect(s => ({ categories: s.categories }))(App)
+export default connect(s => ({ categories: s.categories }))(Categories)
