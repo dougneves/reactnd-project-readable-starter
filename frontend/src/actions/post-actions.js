@@ -1,4 +1,4 @@
-import { FETCH_POSTS } from './action-types'
+import { FETCH_POSTS, CHANGE_ORDER } from './action-types';
 
 export function fetchPosts() {
   return {
@@ -6,5 +6,12 @@ export function fetchPosts() {
     payload: fetch(`${process.env.REACT_APP_API_URL}/posts`, {
       headers: { Authorization: process.env.REACT_APP_AUTH_HEADER }
     }).then(response => response.json())
-  }
+  };
+}
+
+export function changeOrder(newOrder) {
+  return {
+    type: CHANGE_ORDER,
+    payload: newOrder
+  };
 }

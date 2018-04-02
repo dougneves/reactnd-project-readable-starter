@@ -1,13 +1,12 @@
-import React, { Component } from 'react'
+import React from "react";
+import { Container } from "semantic-ui-react";
 
-import Body from './components/body'
+import Body from "./components/body";
 
-class App extends Component {
-  render = () => (
-    <div>
-      <Body />
-    </div>
-  )
-}
+const App = props => (
+  <Container>
+    <Body />
+  </Container>
+);
 
-export default App
+export default App;
