@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import React from "react";
+import { Container } from "semantic-ui-react";
 
-class App extends Component {
-  render = () => (
-    <div>
-      <Route path="/" exact render={() => <div />} />
-    </div>
-  )
-}
+import Body from "./components/body";
 
-export default App
+const App = props => (
+  <Container>
+    <Body />
+  </Container>
+);
+
+export default App;
