@@ -3,14 +3,14 @@ import {
   PENDING,
   FULFILLED,
   REJECTED
-} from '../actions/action-types'
+} from '../actions/action-types';
 
 const DEFAULT_STATE = {
   list: [],
   fetching: false,
   fetched: false,
   error: null
-}
+};
 
 export default function reducer(state = DEFAULT_STATE, action) {
   switch (action.type) {
@@ -19,9 +19,8 @@ export default function reducer(state = DEFAULT_STATE, action) {
         ...state,
         fetching: true,
         fetched: false,
-        list: [],
         error: null
-      }
+      };
     case `${FETCH_CATEGORIES}${FULFILLED}`:
       return {
         ...state,
@@ -29,7 +28,7 @@ export default function reducer(state = DEFAULT_STATE, action) {
         fetched: true,
         list: action.payload.categories,
         error: null
-      }
+      };
     case `${FETCH_CATEGORIES}${REJECTED}`:
       return {
         ...state,
@@ -37,8 +36,8 @@ export default function reducer(state = DEFAULT_STATE, action) {
         fetched: false,
         error: action.payload,
         list: []
-      }
+      };
     default:
-      return state
+      return state;
   }
 }

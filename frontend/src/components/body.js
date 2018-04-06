@@ -1,21 +1,23 @@
-import React, { Component } from 'react';
-import { Container, Divider } from 'semantic-ui-react';
+import React from 'react';
+import { Route } from 'react-router-dom';
+import { Grid } from 'semantic-ui-react';
 
-import PostsList from './posts/posts-list';
-import OrderBy from './order-by';
+import Root from './root';
+import Menu from './menu';
 
-class Body extends Component {
-  render = () => (
-    <Container>
-      <div>
-        <h4>Ordenar</h4> <OrderBy />
-      </div>
-      <Divider />
-      <div>
-        <PostsList />
-      </div>
-    </Container>
-  );
-}
+const Body = props => (
+  <div>
+    <Grid>
+      <Grid.Row>
+        <Grid.Column width={3}>
+          <Menu />
+        </Grid.Column>
+        <Grid.Column width={9}>
+          <Route path="/" exact component={Root} />
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
+  </div>
+);
 
 export default Body;

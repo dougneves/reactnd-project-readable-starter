@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { List } from 'semantic-ui-react';
+import { List, Loader } from 'semantic-ui-react';
 
 import { fetchPosts } from '../../actions/post-actions';
 import { CATEGORY, VOTES, TIMESTAMP, AUTHOR } from '../../types/order-types';
@@ -36,10 +36,16 @@ class PostsList extends Component {
           category={post.category}
           voteScore={post.voteScore}
           deleted={post.deleted}
+          commentsCount={post.commentCount}
         />
       ));
 
-  render = () => <List divided>{this.renderList(this.props.posts.list)}</List>;
+  render = () => (
+    <div>
+      {this.props.posts.fetching && <Loader active inline="centered" />}
+      <List divided>{this.renderList(this.props.posts.list)}</List>
+    </div>
+  );
 }
 
 export default connect(state => ({
