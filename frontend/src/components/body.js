@@ -4,6 +4,7 @@ import { Grid } from 'semantic-ui-react';
 
 import Root from './root';
 import Menu from './menu';
+import PostForm from './posts/post-form';
 
 const Body = props => (
   <div>
@@ -14,6 +15,7 @@ const Body = props => (
         </Grid.Column>
         <Grid.Column width={9}>
           <Route path="/" exact component={Root} />
+          <Route path="/newPost" exact component={PostForm} />
         </Grid.Column>
       </Grid.Row>
     </Grid>
