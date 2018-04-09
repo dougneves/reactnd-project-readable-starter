@@ -1,9 +1,11 @@
 import {
   FETCH_POSTS,
+  FETCH_POST_COMMENTS,
   CHANGE_ORDER,
   CHANGE_FILTER,
   CLEAR_FILTER,
-  ADD_POST
+  ADD_POST,
+  SET_POST_ID
 } from './action-types';
 import { uuidv4 } from '../utils';
 
@@ -13,6 +15,20 @@ export function fetchPosts() {
     payload: fetch(`${process.env.REACT_APP_API_URL}/posts`, {
       headers: { Authorization: process.env.REACT_APP_AUTH_HEADER }
     }).then(response => response.json())
+  };
+}
+
+export function fetchPostComments(postId) {
+  return {
+    type: FETCH_POST_COMMENTS,
+    payload: fetch(
+      `${process.env.REACT_APP_API_URL}/posts/${postId}/comments`,
+      {
+        headers: { Authorization: process.env.REACT_APP_AUTH_HEADER }
+      }
+    )
+      .then(response => response.json())
+      .catch(err => err)
   };
 }
 
@@ -48,6 +64,13 @@ export function changeFilter(newFilter) {
   return {
     type: CHANGE_FILTER,
     payload: newFilter
+  };
+}
+
+export function setPostId(id) {
+  return {
+    type: SET_POST_ID,
+    payload: id
   };
 }
 

@@ -21,23 +21,27 @@ class PostsList extends Component {
     return ret;
   };
 
+  filterByCategory = post =>
+    !this.props.filter || post.category === this.props.filter;
+
   renderList = posts =>
-    posts.sort(this.sortOrder).map(post => {
-      if (!this.props.filter || post.category === this.props.filter)
-        return (
-          <Post
-            key={post.id}
-            timestamp={post.timestamp}
-            title={post.title}
-            body={post.body}
-            author={post.author}
-            category={post.category}
-            voteScore={post.voteScore}
-            deleted={post.deleted}
-            commentsCount={post.commentCount}
-          />
-        );
-    });
+    posts
+      .filter(this.filterByCategory)
+      .sort(this.sortOrder)
+      .map(post => (
+        <Post
+          key={post.id}
+          id={post.id}
+          timestamp={post.timestamp}
+          title={post.title}
+          body={post.body}
+          author={post.author}
+          category={post.category}
+          voteScore={post.voteScore}
+          deleted={post.deleted}
+          commentsCount={post.commentCount}
+        />
+      ));
 
   render = () => (
     <div>

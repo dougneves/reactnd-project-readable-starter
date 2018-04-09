@@ -1,11 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { List, Container, Label, Button } from 'semantic-ui-react';
+import { setPostId } from '../../actions/post-actions';
+
+const handleClick = props => props.dispatch(setPostId(props.id));
 
 const Post = props => (
   <List.Item>
     <List.Content>
       <List.Header>
-        <h3>{props.title}</h3>
+        <h3>
+          <Link to="/viewPost" onClick={() => handleClick(props)}>
+            {props.title}
+          </Link>
+        </h3>
       </List.Header>
       <List.Description>
         <h4>
@@ -26,4 +35,4 @@ const Post = props => (
   </List.Item>
 );
 
-export default Post;
+export default connect()(Post);
