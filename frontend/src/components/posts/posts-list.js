@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { List, Loader } from 'semantic-ui-react';
 
@@ -32,7 +33,7 @@ class PostsList extends Component {
         <Post
           key={post.id}
           id={post.id}
-          timestamp={post.timestamp}
+          timestamp={parseInt(post.timestamp, 10)}
           title={post.title}
           body={post.body}
           author={post.author}
@@ -50,6 +51,18 @@ class PostsList extends Component {
     </div>
   );
 }
+
+PostsList.propTypes = {
+  posts: PropTypes.shape({
+    fetching: PropTypes.bool.isRequired,
+    list: PropTypes.array.irRequired
+  }),
+  orderBy: PropTypes.shape({
+    orderBy: PropTypes.string.isRequired,
+    inverted: PropTypes.bool.isRequired
+  }),
+  filter: PropTypes.string.isRequired
+};
 
 export default connect(state => ({
   posts: state.posts,

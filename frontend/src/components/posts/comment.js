@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { List, Container, Label, Button } from 'semantic-ui-react';
@@ -19,5 +20,12 @@ const Comment = props => (
     </List.Content>
   </List.Item>
 );
+
+Comment.propTypes = {
+  author: PropTypes.string.isRequired,
+  timestamp: PropTypes.number.isRequired,
+  body: PropTypes.string.isRequired,
+  voteScore: PropTypes.number.isRequired
+};
 
 export default Comment;

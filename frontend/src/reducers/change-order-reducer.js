@@ -1,6 +1,9 @@
 import { CHANGE_ORDER } from '../actions/action-types';
 
-const DEFAULT_STATE = 'TIMESTAMP';
+const DEFAULT_STATE = {
+  orderBy: 'TIMESTAMP',
+  inverted: false
+};
 
 export default function reducer(state = DEFAULT_STATE, action) {
   switch (action.type) {

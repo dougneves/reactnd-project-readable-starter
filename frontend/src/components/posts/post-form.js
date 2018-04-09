@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form, Message } from 'semantic-ui-react';
 import { addPost } from '../../actions/post-actions';
@@ -62,7 +63,9 @@ class PostForm extends Component {
         <h1>Nova postagem</h1>
         <Form
           onSubmit={this.handleSubmit}
-          loading={this.props.categories.fetching}
+          loading={
+            this.props.categories.fetching || this.props.addPost.fetching
+          }
           error={this.state.formError}
         >
           <Message error>Todos os campos são obrigatórios.</Message>
@@ -99,6 +102,18 @@ class PostForm extends Component {
     );
   };
 }
+
+PostForm.propTypes = {
+  categories: PropTypes.shape({
+    fetching: PropTypes.bool.isRequired,
+    fetched: PropTypes.bool.isRequired,
+    list: PropTypes.array.isRequired
+  }),
+  addPost: PropTypes.shape({
+    fetched: PropTypes.bool.isRequired,
+    fetching: PropTypes.bool.isRequired
+  })
+};
 
 export default connect(state => {
   return {

@@ -20,7 +20,7 @@ class PostsList extends Component {
         <Post
           key={post.id}
           id={post.id}
-          timestamp={post.timestamp}
+          timestamp={parseInt(post.timestamp, 10)}
           title={post.title}
           body={post.body}
           author={post.author}

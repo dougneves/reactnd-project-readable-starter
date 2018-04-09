@@ -5,7 +5,11 @@ import {
   CHANGE_FILTER,
   CLEAR_FILTER,
   ADD_POST,
-  SET_POST_ID
+  SET_POST_ID,
+  VOTE_POST,
+  PENDING,
+  FULFILLED,
+  REJECTED
 } from './action-types';
 import { uuidv4 } from '../utils';
 
@@ -77,5 +81,27 @@ export function setPostId(id) {
 export function clearFilter() {
   return {
     type: CLEAR_FILTER
+  };
+}
+
+export function votePost(postId, vote) {
+  return dispatch => {
+    dispatch({ type: VOTE_POST + PENDING });
+
+    fetch(`${process.env.REACT_APP_API_URL}/posts/${postId}`, {
+      headers: {
+        Authorization: process.env.REACT_APP_AUTH_HEADER,
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({ option: vote })
+    })
+      .then(post => {
+        dispatch({ type: VOTE_POST + FULFILLED });
+        dispatch(fetchPosts());
+      })
+      .catch(err => {
+        dispatch({ type: VOTE_POST + REJECTED, payload: err });
+      });
   };
 }

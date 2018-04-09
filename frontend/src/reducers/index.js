@@ -6,6 +6,7 @@ import addPost from './add-post-reducer';
 import orderBy from './change-order-reducer';
 import filter from './change-filter-reducer';
 import postId from './set-post-id-reducer';
+import votePost from './vote-post-reducer';
 
 export default combineReducers({
   categories,
@@ -14,5 +15,6 @@ export default combineReducers({
   orderBy,
   filter,
   comments,
-  postId
+  postId,
+  votePost
 });

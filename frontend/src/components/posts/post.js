@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { List, Container, Label, Button } from 'semantic-ui-react';
-import { setPostId } from '../../actions/post-actions';
+import { setPostId, votePost } from '../../actions/post-actions';
 
 const handleClick = props => props.dispatch(setPostId(props.id));
+const handleVote = (props, vote) => props.dispatch(votePost(props.id, vote));
 
 const Post = props => (
   <List.Item>
@@ -21,8 +23,14 @@ const Post = props => (
           Escrito por {props.author} em{' '}
           {new Date(props.timestamp).toLocaleString()}
         </h4>
-        <Button icon="thumbs outline up" />
-        <Button icon="thumbs outline down" />
+        <Button
+          icon="thumbs outline up"
+          onClick={() => handleVote(props, 'upVote')}
+        />
+        <Button
+          icon="thumbs outline down"
+          onClick={() => handleVote(props, 'downVote')}
+        />
         <Container text textAlign="justified">
           {props.body}
         </Container>
@@ -35,4 +43,16 @@ const Post = props => (
   </List.Item>
 );
 
-export default connect()(Post);
+Post.propTypes = {
+  title: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
+  timestamp: PropTypes.number.isRequired,
+  body: PropTypes.string.isRequired,
+  voteScore: PropTypes.number.isRequired,
+  category: PropTypes.string.isRequired,
+  commentsCount: PropTypes.number.isRequired
+};
+
+export default connect(state => {
+  return { votePost: state.votePost };
+})(Post);
