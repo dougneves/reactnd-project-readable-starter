@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Loader, List, Container, Divider, Button } from 'semantic-ui-react';
+import { Loader, List, Container, Divider } from 'semantic-ui-react';
 
 import { fetchPostComments } from '../../actions/post-actions';
 
 import Post from './post';
 import Comment from './comment';
+import CommentForm from './comment-form';
 
 class PostsList extends Component {
+  componentWillMount = () => {
+    if (!this.props.postId) this.props.history.push('/');
+  };
+
   componentDidMount = () =>
     this.props.dispatch(fetchPostComments(this.props.postId));
 
@@ -35,10 +40,12 @@ class PostsList extends Component {
     comments.map(comment => (
       <Comment
         key={comment.id}
+        id={comment.id}
         timestamp={comment.timestamp}
         body={comment.body}
         author={comment.author}
         voteScore={comment.voteScore}
+        parentId={this.props.postId}
       />
     ));
 
@@ -47,12 +54,12 @@ class PostsList extends Component {
       {this.props.posts.fetching && <Loader active inline="centered" />}
       <List divided>{this.renderPost(this.props.posts.list)}</List>
       <Divider />
-      <Button>Responder</Button>
-      <Divider />
       <Container>
         {this.props.comments.fetching && <Loader active inline="centered" />}
         <List divided>{this.renderComments(this.props.comments.list)}</List>
       </Container>
+      <Divider />
+      <CommentForm parentId={this.props.postId} />
     </div>
   );
 }

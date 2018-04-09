@@ -5,8 +5,10 @@ import {
   CHANGE_FILTER,
   CLEAR_FILTER,
   ADD_POST,
+  ADD_COMMENT,
   SET_POST_ID,
   VOTE_POST,
+  VOTE_COMMENT,
   PENDING,
   FULFILLED,
   REJECTED
@@ -50,6 +52,26 @@ export function addPost({ title, body, author, category }) {
         body,
         author,
         category,
+        timestamp: new Date(),
+        id: uuidv4()
+      })
+    })
+  };
+}
+
+export function addComment({ body, author, parentId }) {
+  return {
+    type: ADD_COMMENT,
+    payload: fetch(`${process.env.REACT_APP_API_URL}/comments`, {
+      headers: {
+        Authorization: process.env.REACT_APP_AUTH_HEADER,
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        body,
+        author,
+        parentId,
         timestamp: new Date(),
         id: uuidv4()
       })
@@ -104,4 +126,50 @@ export function votePost(postId, vote) {
         dispatch({ type: VOTE_POST + REJECTED, payload: err });
       });
   };
+}
+
+export function voteComment({ commentId, parentId, vote }) {
+  return dispatch => {
+    dispatch({ type: VOTE_COMMENT + PENDING });
+
+    fetch(`${process.env.REACT_APP_API_URL}/comments/${commentId}`, {
+      headers: {
+        Authorization: process.env.REACT_APP_AUTH_HEADER,
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({ option: vote })
+    })
+      .then(post => {
+        dispatch({ type: VOTE_COMMENT + FULFILLED });
+        dispatch(fetchPostComments(parentId));
+      })
+      .catch(err => {
+        dispatch({ type: VOTE_COMMENT + REJECTED, payload: err });
+      });
+  };
+}
+
+export function deletePost(postId) {
+  return dispatch =>
+    fetch(`${process.env.REACT_APP_API_URL}/posts/${postId}`, {
+      headers: {
+        Authorization: process.env.REACT_APP_AUTH_HEADER
+      },
+      method: 'DELETE'
+    })
+      .then(post => dispatch(fetchPosts()))
+      .catch(err => console.error(err));
+}
+
+export function deleteComment({ commentId, parentId }) {
+  return dispatch =>
+    fetch(`${process.env.REACT_APP_API_URL}/comments/${commentId}`, {
+      headers: {
+        Authorization: process.env.REACT_APP_AUTH_HEADER
+      },
+      method: 'DELETE'
+    })
+      .then(post => dispatch(fetchPostComments(parentId)))
+      .catch(err => console.error(err));
 }

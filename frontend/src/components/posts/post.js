@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { List, Container, Label, Button } from 'semantic-ui-react';
-import { setPostId, votePost } from '../../actions/post-actions';
+import { setPostId, votePost, deletePost } from '../../actions/post-actions';
 
 const handleClick = props => props.dispatch(setPostId(props.id));
 const handleVote = (props, vote) => props.dispatch(votePost(props.id, vote));
+const handleDelete = props => props.dispatch(deletePost(props.id));
 
 const Post = props => (
   <List.Item>
@@ -19,10 +20,16 @@ const Post = props => (
         </h3>
       </List.Header>
       <List.Description>
-        <h4>
-          Escrito por {props.author} em{' '}
-          {new Date(props.timestamp).toLocaleString()}
-        </h4>
+        <Container text textAlign="justified">
+          {props.body}
+        </Container>
+        <p>
+          Escrito por <strong>{props.author}</strong> em{' '}
+          <strong>{new Date(props.timestamp).toLocaleString()}</strong>
+        </p>
+        <Label size="large" icon="star" content={props.voteScore} />
+        <Label size="large" content={props.category} />
+        <Label size="large" icon="comments" content={props.commentsCount} />
         <Button
           icon="thumbs outline up"
           onClick={() => handleVote(props, 'upVote')}
@@ -31,13 +38,9 @@ const Post = props => (
           icon="thumbs outline down"
           onClick={() => handleVote(props, 'downVote')}
         />
-        <Container text textAlign="justified">
-          {props.body}
-        </Container>
-
-        <Label size="large" icon="star" content={props.voteScore} />
-        <Label size="large" content={props.category} />
-        <Label size="large" icon="comments" content={props.commentsCount} />
+        <Button icon="ban" onClick={() => handleDelete(props)}>
+          Apagar post
+        </Button>
       </List.Description>
     </List.Content>
   </List.Item>
@@ -53,6 +56,4 @@ Post.propTypes = {
   commentsCount: PropTypes.number.isRequired
 };
 
-export default connect(state => {
-  return { votePost: state.votePost };
-})(Post);
+export default connect()(Post);
