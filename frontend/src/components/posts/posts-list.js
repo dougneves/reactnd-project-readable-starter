@@ -8,9 +8,7 @@ import { CATEGORY, VOTES, TIMESTAMP, AUTHOR } from '../../types/order-types';
 import Post from './post';
 
 class PostsList extends Component {
-  componentDidMount = () => {
-    this.props.dispatch(fetchPosts());
-  };
+  componentDidMount = () => this.props.dispatch(fetchPosts());
 
   sortOrder = (a, b) => {
     const { orderBy, inverted } = this.props.orderBy;
@@ -24,21 +22,22 @@ class PostsList extends Component {
   };
 
   renderList = posts =>
-    posts
-      .sort(this.sortOrder)
-      .map(post => (
-        <Post
-          key={post.id}
-          timestamp={post.timestamp}
-          title={post.title}
-          body={post.body}
-          author={post.author}
-          category={post.category}
-          voteScore={post.voteScore}
-          deleted={post.deleted}
-          commentsCount={post.commentCount}
-        />
-      ));
+    posts.sort(this.sortOrder).map(post => {
+      if (!this.props.filter || post.category === this.props.filter)
+        return (
+          <Post
+            key={post.id}
+            timestamp={post.timestamp}
+            title={post.title}
+            body={post.body}
+            author={post.author}
+            category={post.category}
+            voteScore={post.voteScore}
+            deleted={post.deleted}
+            commentsCount={post.commentCount}
+          />
+        );
+    });
 
   render = () => (
     <div>
@@ -50,5 +49,6 @@ class PostsList extends Component {
 
 export default connect(state => ({
   posts: state.posts,
-  orderBy: state.orderBy
+  orderBy: state.orderBy,
+  filter: state.filter
 }))(PostsList);
