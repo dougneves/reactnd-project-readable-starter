@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Loader, List, Container, Divider } from 'semantic-ui-react';
 
-import { fetchPostComments } from '../../actions/post-actions';
+import { fetchPostComments } from '../../actions/comment-actions';
 
 import Post from './post';
 import Comment from './comment';

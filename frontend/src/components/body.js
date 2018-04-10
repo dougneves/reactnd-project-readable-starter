@@ -17,6 +17,7 @@ const Body = props => (
         <Grid.Column width={9}>
           <Route path="/" exact component={Root} />
           <Route path="/newPost" exact component={PostForm} />
+          <Route path="/editPost" exact component={PostForm} />
           <Route path="/viewPost" component={PostComplete} />
         </Grid.Column>
       </Grid.Row>

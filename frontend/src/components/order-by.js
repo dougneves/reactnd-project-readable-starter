@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dropdown, Checkbox } from 'semantic-ui-react';
 
-import { changeOrder } from '../actions/post-actions';
+import { changeOrder } from '../actions/order-and-filter-actions';
 import { CATEGORY, VOTES, TIMESTAMP, AUTHOR } from '../types/order-types';
 
 class OrderBy extends Component {

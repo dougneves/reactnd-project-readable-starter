@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchCategories } from '../actions/category-actions';
-import { changeFilter, clearFilter } from '../actions/post-actions';
+import { changeFilter, clearFilter } from '../actions/order-and-filter-actions';
 import { Menu, Loader } from 'semantic-ui-react';
 
 class AppMenu extends Component {

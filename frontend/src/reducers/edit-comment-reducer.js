@@ -1,14 +1,15 @@
-import { CHANGE_ORDER } from '../actions/action-types';
-import { CATEGORY } from '../types/order-types';
+import { EDIT_COMMENT } from '../actions/action-types';
 
 const DEFAULT_STATE = {
-  orderBy: CATEGORY,
-  inverted: false
+  id: '',
+  parentId: '',
+  author: '',
+  body: ''
 };
 
 export default function reducer(state = DEFAULT_STATE, action) {
   switch (action.type) {
-    case CHANGE_ORDER:
+    case EDIT_COMMENT:
       return action.payload;
     default:
       return state;

@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { List, Container, Label, Button, Divider } from 'semantic-ui-react';
-import { voteComment, deleteComment } from '../../actions/post-actions';
+import { List, Container, Label, Button } from 'semantic-ui-react';
+import {
+  voteComment,
+  deleteComment,
+  editComment
+} from '../../actions/comment-actions';
 import { UP_VOTE, DOWN_VOTE } from '../../types/vote-types';
 
 const handleCommentVote = (props, vote) =>
@@ -14,6 +17,7 @@ const handleDeleteComment = props =>
   props.dispatch(
     deleteComment({ commentId: props.id, parentId: props.parentId })
   );
+const handleEditComment = props => props.dispatch(editComment({ ...props }));
 
 const Comment = props => (
   <List.Item>
@@ -41,9 +45,14 @@ const Comment = props => (
           size="small"
           icon="ban"
           onClick={() => handleDeleteComment(props)}
-        >
-          Apagar comentário
-        </Button>
+          content="Apagar comentário"
+        />
+        <Button
+          size="small"
+          icon="edit"
+          onClick={() => handleEditComment(props)}
+          content="Editar comentário"
+        />
       </List.Description>
     </List.Content>
   </List.Item>

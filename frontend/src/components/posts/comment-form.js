@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form, Message } from 'semantic-ui-react';
-import { addComment, fetchPostComments } from '../../actions/post-actions';
+import { addComment, fetchPostComments } from '../../actions/comment-actions';
 
 const DEFAULT_STATE = {
+  id: '',
   parentId: '',
   body: '',
   author: '',
@@ -16,6 +17,12 @@ class PostForm extends Component {
 
   handleChange = (e, v) => {
     this.setState({ [v.name]: v.value, formError: false });
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState.id !== this.props.editComment.id) {
+      this.setState({ ...this.props.editComment });
+    }
   };
 
   componentWillReceiveProps = nextProps => {
@@ -91,6 +98,7 @@ PostForm.propTypes = {
 export default connect(state => {
   return {
     categories: state.categories,
-    addComment: state.addComment
+    addComment: state.addComment,
+    editComment: state.editComment
   };
 })(PostForm);

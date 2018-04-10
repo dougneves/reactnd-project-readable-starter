@@ -9,6 +9,8 @@ import filter from './change-filter-reducer';
 import postId from './set-post-id-reducer';
 import votePost from './vote-post-reducer';
 import voteComment from './vote-comment-reducer';
+import editPost from './edit-post-reducer';
+import editComment from './edit-comment-reducer';
 
 export default combineReducers({
   categories,
@@ -20,5 +22,7 @@ export default combineReducers({
   comments,
   postId,
   votePost,
-  voteComment
+  voteComment,
+  editPost,
+  editComment
 });

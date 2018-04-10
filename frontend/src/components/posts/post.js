@@ -1,13 +1,23 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { List, Container, Label, Button } from 'semantic-ui-react';
-import { setPostId, votePost, deletePost } from '../../actions/post-actions';
+import {
+  setPostId,
+  votePost,
+  deletePost,
+  editPost
+} from '../../actions/post-actions';
 
 const handleClick = props => props.dispatch(setPostId(props.id));
 const handleVote = (props, vote) => props.dispatch(votePost(props.id, vote));
 const handleDelete = props => props.dispatch(deletePost(props.id));
+const handleEdit = props => {
+  props.dispatch(editPost(props));
+  props.history.push('/editPost');
+};
 
 const Post = props => (
   <List.Item>
@@ -38,9 +48,16 @@ const Post = props => (
           icon="thumbs outline down"
           onClick={() => handleVote(props, 'downVote')}
         />
-        <Button icon="ban" onClick={() => handleDelete(props)}>
-          Apagar post
-        </Button>
+        <Button
+          icon="ban"
+          onClick={() => handleDelete(props)}
+          content="Apagar post"
+        />
+        <Button
+          icon="edit"
+          onClick={() => handleEdit(props)}
+          content="Editar post"
+        />
       </List.Description>
     </List.Content>
   </List.Item>
@@ -56,4 +73,4 @@ Post.propTypes = {
   commentsCount: PropTypes.number.isRequired
 };
 
-export default connect()(Post);
+export default withRouter(connect()(Post));

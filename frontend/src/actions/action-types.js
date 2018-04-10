@@ -13,3 +13,5 @@ export const CHANGE_ORDER = 'CHANGE_ORDER';
 export const CLEAR_FILTER = 'CLEAR_FILTER';
 export const CHANGE_FILTER = 'CHANGE_FILTER';
 export const VOTE_COMMENT = 'VOTE_COMMENT';
+export const EDIT_POST = 'EDIT_POST';
+export const EDIT_COMMENT = 'EDIT_COMMENT';

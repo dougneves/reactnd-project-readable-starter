@@ -11,7 +11,16 @@ class PostForm extends Component {
     author: '',
     category: '',
     categories: [],
-    formError: false
+    formError: false,
+    id: ''
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState.id !== this.props.editPost.id) {
+      this.setState({
+        ...this.props.editPost
+      });
+    }
   };
 
   mapCategories = categories =>
@@ -37,14 +46,13 @@ class PostForm extends Component {
   componentWillReceiveProps = nextProps => {
     if (!this.props.categories.fetched && nextProps.categories.fetched)
       this.mapCategories(nextProps.categories.list);
-
-    if (!this.props.addPost.fetched && nextProps.addPost.fetched) {
-      this.props.history.push('/');
-    }
   };
 
   handleSubmit = () => {
-    if (this.validate()) this.props.dispatch(addPost(this.state));
+    if (this.validate()) {
+      this.props.dispatch(addPost(this.state));
+      this.props.history.push('/');
+    }
   };
 
   validate = () => {
@@ -58,9 +66,10 @@ class PostForm extends Component {
   };
 
   render = () => {
+    const editing = !!this.state.id;
     return (
       <div>
-        <h1>Nova postagem</h1>
+        <h1>{editing ? 'Editar postagem' : 'Nova postagem'}</h1>
         <Form
           onSubmit={this.handleSubmit}
           loading={
@@ -88,6 +97,7 @@ class PostForm extends Component {
             name="author"
             placeholder="Autor"
             value={this.state.author}
+            disabled={editing}
           />
           <Form.Select
             onChange={this.handleChange}
@@ -95,6 +105,8 @@ class PostForm extends Component {
             name="category"
             placeholder="Categoria"
             options={this.state.categories}
+            value={this.state.category}
+            disabled={editing}
           />
           <Form.Button type="submit">Enviar</Form.Button>
         </Form>
@@ -118,6 +130,7 @@ PostForm.propTypes = {
 export default connect(state => {
   return {
     categories: state.categories,
-    addPost: state.addPost
+    addPost: state.addPost,
+    editPost: state.editPost
   };
 })(PostForm);
