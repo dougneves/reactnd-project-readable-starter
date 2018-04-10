@@ -10,6 +10,7 @@ import {
   deletePost,
   editPost
 } from '../../actions/post-actions';
+import { UP_VOTE, DOWN_VOTE } from '../../types/vote-types';
 
 const handleClick = props => props.dispatch(setPostId(props.id));
 const handleVote = (props, vote) => props.dispatch(votePost(props.id, vote));
@@ -42,11 +43,11 @@ const Post = props => (
         <Label size="large" icon="comments" content={props.commentsCount} />
         <Button
           icon="thumbs outline up"
-          onClick={() => handleVote(props, 'upVote')}
+          onClick={() => handleVote(props, UP_VOTE)}
         />
         <Button
           icon="thumbs outline down"
-          onClick={() => handleVote(props, 'downVote')}
+          onClick={() => handleVote(props, DOWN_VOTE)}
         />
         <Button
           icon="ban"

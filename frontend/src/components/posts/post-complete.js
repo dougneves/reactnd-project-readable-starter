@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Loader, List, Container, Divider } from 'semantic-ui-react';
-
+import PropTypes from 'prop-types';
 import { fetchPostComments } from '../../actions/comment-actions';
 
 import Post from './post';
 import Comment from './comment';
 import CommentForm from './comment-form';
 
-class PostsList extends Component {
+class PostComplete extends Component {
   componentWillMount = () => {
     if (!this.props.postId) this.props.history.push('/');
   };
@@ -41,7 +41,7 @@ class PostsList extends Component {
       <Comment
         key={comment.id}
         id={comment.id}
-        timestamp={comment.timestamp}
+        timestamp={parseInt(comment.timestamp, 10)}
         body={comment.body}
         author={comment.author}
         voteScore={comment.voteScore}
@@ -64,8 +64,22 @@ class PostsList extends Component {
   );
 }
 
+PostComplete.propTypes = {
+  posts: PropTypes.shape({
+    fetching: PropTypes.bool.isRequired,
+    fetched: PropTypes.bool.isRequired,
+    list: PropTypes.array.isRequired
+  }),
+  postId: PropTypes.string.isRequired,
+  comments: PropTypes.shape({
+    fetching: PropTypes.bool.isRequired,
+    fetched: PropTypes.bool.isRequired,
+    list: PropTypes.array.isRequired
+  })
+};
+
 export default connect(state => ({
   posts: state.posts,
   postId: state.postId,
   comments: state.comments
-}))(PostsList);
+}))(PostComplete);

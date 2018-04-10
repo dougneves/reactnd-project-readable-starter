@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form, Message } from 'semantic-ui-react';
-import { addPost } from '../../actions/post-actions';
+import { addPost, editPost } from '../../actions/post-actions';
 
 class PostForm extends Component {
   state = {
@@ -51,6 +51,7 @@ class PostForm extends Component {
   handleSubmit = () => {
     if (this.validate()) {
       this.props.dispatch(addPost(this.state));
+      this.props.dispatch(editPost({ id: '', title: '', body: '' }));
       this.props.history.push('/');
     }
   };
@@ -124,6 +125,11 @@ PostForm.propTypes = {
   addPost: PropTypes.shape({
     fetched: PropTypes.bool.isRequired,
     fetching: PropTypes.bool.isRequired
+  }),
+  editPost: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired
   })
 };
 

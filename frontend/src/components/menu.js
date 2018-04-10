@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { fetchCategories } from '../actions/category-actions';
 import { changeFilter, clearFilter } from '../actions/order-and-filter-actions';
@@ -41,6 +42,15 @@ class AppMenu extends Component {
     </div>
   );
 }
+
+AppMenu.propTypes = {
+  categories: PropTypes.shape({
+    fetching: PropTypes.bool.isRequired,
+    fetched: PropTypes.bool.isRequired,
+    list: PropTypes.array.isRequired
+  }),
+  filter: PropTypes.string.isRequired
+};
 
 export default connect(s => ({ categories: s.categories, filter: s.filter }))(
   AppMenu

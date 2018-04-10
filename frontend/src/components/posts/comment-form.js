@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form, Message } from 'semantic-ui-react';
-import { addComment, fetchPostComments } from '../../actions/comment-actions';
+import {
+  addComment,
+  fetchPostComments,
+  editComment
+} from '../../actions/comment-actions';
 
 const DEFAULT_STATE = {
   id: '',
@@ -39,6 +43,7 @@ class PostForm extends Component {
       this.props.dispatch(
         addComment({ ...this.state, parentId: this.props.parentId })
       );
+      this.props.dispatch(editComment({ id: '', ...DEFAULT_STATE }));
       this.setState(DEFAULT_STATE);
     }
   };
@@ -52,6 +57,7 @@ class PostForm extends Component {
   };
 
   render = () => {
+    const editing = this.state.id ? true : false;
     return (
       <div>
         <h4>Comentar</h4>
@@ -75,6 +81,7 @@ class PostForm extends Component {
             name="author"
             placeholder="Autor"
             value={this.state.author}
+            disabled={editing}
           />
           <Form.Button type="submit">Enviar</Form.Button>
         </Form>
@@ -89,9 +96,13 @@ PostForm.propTypes = {
     fetched: PropTypes.bool.isRequired,
     list: PropTypes.array.isRequired
   }),
-  addPost: PropTypes.shape({
+  addComment: PropTypes.shape({
     fetched: PropTypes.bool.isRequired,
     fetching: PropTypes.bool.isRequired
+  }),
+  editComment: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired
   })
 };
 

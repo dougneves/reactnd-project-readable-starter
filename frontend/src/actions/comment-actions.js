@@ -24,21 +24,24 @@ export function fetchPostComments(postId) {
   };
 }
 
-export function addComment({ body, author, parentId }) {
+export function addComment({ body, author, parentId, id }) {
+  const postId = id ? id : uuidv4();
+  const method = id ? 'PUT' : 'POST';
+  const url = id ? `/comments/${postId}` : '/comments';
   return {
     type: ADD_COMMENT,
-    payload: fetch(`${process.env.REACT_APP_API_URL}/comments`, {
+    payload: fetch(`${process.env.REACT_APP_API_URL}${url}`, {
       headers: {
         Authorization: process.env.REACT_APP_AUTH_HEADER,
         'Content-Type': 'application/json'
       },
-      method: 'POST',
+      method,
       body: JSON.stringify({
         body,
         author,
         parentId,
         timestamp: new Date(),
-        id: uuidv4()
+        id: postId
       })
     })
   };
