@@ -9,7 +9,9 @@ import { CATEGORY, VOTES, TIMESTAMP, AUTHOR } from '../../types/order-types';
 import Post from './post';
 
 class PostsList extends Component {
-  componentDidMount = () => this.props.dispatch(fetchPosts());
+  componentDidMount = () => {
+    this.props.dispatch(fetchPosts());
+  };
 
   sortOrder = (a, b) => {
     const { orderBy, inverted } = this.props.orderBy;

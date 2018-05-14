@@ -3,18 +3,31 @@ import { connect } from 'react-redux';
 import { Loader, List, Container, Divider } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { fetchPostComments } from '../../actions/comment-actions';
-
+import { setPostId } from '../../actions/post-actions';
 import Post from './post';
 import Comment from './comment';
 import CommentForm from './comment-form';
 
 class PostComplete extends Component {
   componentWillMount = () => {
-    if (!this.props.postId) this.props.history.push('/');
+    if (
+      !this.props.match ||
+      !this.props.match.params ||
+      !this.props.match.post_id
+    )
+      this.props.history.push('/');
   };
 
-  componentDidMount = () =>
-    this.props.dispatch(fetchPostComments(this.props.postId));
+  componentDidMount = () => {};
+
+  getPost = () => {
+    if (
+      this.props.match &&
+      this.props.match.params &&
+      !this.props.match.params.post_id
+    )
+      this.props.dispatch(fetchPostComments(this.props.postId));
+  };
 
   filterById = post => post.id === this.props.postId;
 

@@ -11,8 +11,8 @@ class AppMenu extends Component {
 
   componentDidMount = () => this.props.dispatch(fetchCategories());
 
-  handleClick = category => this.props.dispatch(changeFilter(category));
-  handleClear = () => this.props.dispatch(clearFilter());
+  //handleClick = category => this.props.dispatch(changeFilter(category));
+  //handleClear = () => this.props.dispatch(clearFilter());
 
   categoryList = categories =>
     categories.map(category => (
@@ -21,9 +21,7 @@ class AppMenu extends Component {
         key={category.path}
         active={this.props.filter === category.path}
       >
-        <Link to="/" onClick={() => this.handleClick(category.path)}>
-          {category.name}
-        </Link>
+        <Link to={`/${category.name}`}>{category.name}</Link>
       </Menu.Item>
     ));
 
@@ -32,9 +30,7 @@ class AppMenu extends Component {
       <h3>Categorias</h3>
       <Menu fluid vertical tabular>
         <Menu.Item active={!this.props.filter}>
-          <Link to="/" onClick={this.handleClear}>
-            Todos os Posts
-          </Link>
+          <Link to="/">Todos os Posts</Link>
         </Menu.Item>
         {this.props.categories.fetching && <Loader active inline="centered" />}
         {this.categoryList(this.props.categories.list)}

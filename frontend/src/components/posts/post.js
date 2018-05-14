@@ -25,7 +25,10 @@ const Post = props => (
     <List.Content>
       <List.Header>
         <h3>
-          <Link to="/viewPost" onClick={() => handleClick(props)}>
+          <Link
+            to={`/${props.category}/${props.id}`}
+            onClick={() => handleClick(props)}
+          >
             {props.title}
           </Link>
         </h3>
