@@ -31,9 +31,6 @@ class PostForm extends Component {
   };
 
   componentWillReceiveProps = nextProps => {
-    //if (!this.props.categories.fetched && nextProps.categories.fetched)
-    //  this.mapCategories(nextProps.categories.list);
-
     if (!this.props.addComment.fetched && nextProps.addComment.fetched) {
       this.props.dispatch(fetchPostComments(this.props.parentId));
       this.props.dispatch(fetchPosts());

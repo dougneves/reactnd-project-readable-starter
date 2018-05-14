@@ -40,10 +40,10 @@ class PostComplete extends Component {
 
   filterById = post => post.id === this.props.match.params.post_id;
 
-  renderPost = posts =>
-    posts
-      .filter(this.filterById)
-      .map(post => (
+  renderPost = posts => {
+    const filtered = posts.filter(this.filterById);
+    if (filtered.length > 0)
+      return filtered.map(post => (
         <Post
           key={post.id}
           id={post.id}
@@ -57,6 +57,8 @@ class PostComplete extends Component {
           commentsCount={post.commentCount}
         />
       ));
+    else <p>Post com id {this.props.match.params.post_id} não encontrado</p>;
+  };
 
   renderComments = comments =>
     comments.map(comment => (

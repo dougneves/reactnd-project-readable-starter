@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { fetchCategories } from '../actions/category-actions';
-import { changeFilter, clearFilter } from '../actions/order-and-filter-actions';
 import { Menu, Loader } from 'semantic-ui-react';
 
 class AppMenu extends Component {
@@ -12,9 +11,6 @@ class AppMenu extends Component {
   componentDidMount = () => {
     this.props.dispatch(fetchCategories());
   };
-
-  //handleClick = category => this.props.dispatch(changeFilter(category));
-  //handleClear = () => this.props.dispatch(clearFilter());
 
   categoryList = categories =>
     categories.map(category => (
