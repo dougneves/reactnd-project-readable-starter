@@ -14,7 +14,10 @@ import { UP_VOTE, DOWN_VOTE } from '../../types/vote-types';
 
 const handleClick = props => props.dispatch(setPostId(props.id));
 const handleVote = (props, vote) => props.dispatch(votePost(props.id, vote));
-const handleDelete = props => props.dispatch(deletePost(props.id));
+const handleDelete = props => {
+  props.dispatch(deletePost(props.id));
+  props.history.push('/');
+};
 const handleEdit = props => {
   props.dispatch(editPost(props));
   props.history.push('/editPost');

@@ -4,32 +4,41 @@ import { Loader, List, Container, Divider } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { fetchPostComments } from '../../actions/comment-actions';
 import { setPostId } from '../../actions/post-actions';
+import { changeFilter } from '../../actions/order-and-filter-actions';
 import Post from './post';
 import Comment from './comment';
 import CommentForm from './comment-form';
+import { fetchPosts } from '../../actions/post-actions';
 
 class PostComplete extends Component {
   componentWillMount = () => {
     if (
       !this.props.match ||
       !this.props.match.params ||
-      !this.props.match.post_id
+      !this.props.match.params.post_id
     )
       this.props.history.push('/');
   };
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    this.getComments();
+    this.props.dispatch(fetchPosts());
+  };
+  //componentDidUpdate = () => this.getPost();
 
-  getPost = () => {
-    if (
-      this.props.match &&
-      this.props.match.params &&
-      !this.props.match.params.post_id
-    )
-      this.props.dispatch(fetchPostComments(this.props.postId));
+  getComments = () => {
+    if (this.props.match && this.props.match.params) {
+      if (this.props.match.params.post_id) {
+        this.props.dispatch(fetchPostComments(this.props.match.params.post_id));
+        this.props.dispatch(setPostId(this.props.match.params.post_id));
+      }
+      if (this.props.match.params.category) {
+        this.props.dispatch(changeFilter(this.props.match.params.category));
+      }
+    }
   };
 
-  filterById = post => post.id === this.props.postId;
+  filterById = post => post.id === this.props.match.params.post_id;
 
   renderPost = posts =>
     posts

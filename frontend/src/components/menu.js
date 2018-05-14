@@ -9,7 +9,9 @@ import { Menu, Loader } from 'semantic-ui-react';
 class AppMenu extends Component {
   state = { visible: false, categories: [] };
 
-  componentDidMount = () => this.props.dispatch(fetchCategories());
+  componentDidMount = () => {
+    this.props.dispatch(fetchCategories());
+  };
 
   //handleClick = category => this.props.dispatch(changeFilter(category));
   //handleClear = () => this.props.dispatch(clearFilter());
@@ -21,7 +23,7 @@ class AppMenu extends Component {
         key={category.path}
         active={this.props.filter === category.path}
       >
-        <Link to={`/${category.name}`}>{category.name}</Link>
+        <Link to={`/${category.path}`}>{category.name}</Link>
       </Menu.Item>
     ));
 
